@@ -128,7 +128,7 @@ class MainActivity : AppCompatActivity() {
 
 
         addResizeImageToList()
-        createBoard()
+        createBoardForSecondPlayer()
     }
 
 
@@ -608,7 +608,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private  fun  createBoard(){
+    private  fun  createBoardForSecondPlayer(){
         val gridLayout: GridLayout = binding.glBoardMain
         gridLayout.rowCount = noOfBlock
         gridLayout.columnCount = noOfBlock
