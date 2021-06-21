@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">CandyCrush</string>
+    <string name="player_two">PLAYER 2</string>
+    <string name="moves">moves</string>
+    <string name="score">Score</string>
+    <string name="player_one">PLAYER 1</string>
+</resources>
