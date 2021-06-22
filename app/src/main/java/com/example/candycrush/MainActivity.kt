@@ -135,6 +135,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkRowAndColumn(){
 
+        for (i in 0 until 62){
+            val isBlank: Boolean = candy[i].tag == notCandy
+
+        }
 
     }
 
@@ -142,7 +146,7 @@ class MainActivity : AppCompatActivity() {
     private fun checkRowForAll() {
 
         for (i in 0 until 62) {
-            val chosedCandy = candy[i].tag
+
             val isBlank: Boolean = candy[i].tag == notCandy
             val notValid = intArrayOf(6, 7, 14, 15, 22, 23, 30, 31, 38, 39, 46, 47, 54, 55)
             val list: List<Int> = notValid.toList()
@@ -151,110 +155,11 @@ class MainActivity : AppCompatActivity() {
 
 
 
-                when {
-                    (i % 8 == 0 && !isBlank && chosedCandy == candy[i+1].tag &&
-                            chosedCandy == candy[i+2].tag && chosedCandy == candy[i+3].tag &&
-                            chosedCandy == candy[i+4].tag && chosedCandy == candy[i+5].tag && chosedCandy == candy[i+6].tag &&
-                            chosedCandy == candy[i+7].tag
-                            ) -> {
-                        score += 8
-                        // 7
-                        binding.tvPlayerOneScore.text = "$score"
-                        candy[i].setImageResource(notCandy)
-                        candy[i].tag = notCandy
-                      // 6
-                        candy[i+1].setImageResource(notCandy)
-                        candy[i+1].tag = notCandy
-                      //5
-                        candy[i+2].setImageResource(notCandy)
-                        candy[i+2].tag = notCandy
-                      //4
-                        candy[i+3].setImageResource(notCandy)
-                        candy[i+3].tag = notCandy
-                       // 3
-                        candy[i+4].setImageResource(notCandy)
-                        candy[i+4].tag = notCandy
-                      //2
-                        candy[i+5].setImageResource(notCandy)
-                        candy[i+5].tag = notCandy
-                     // 1
-                        candy[i+6].setImageResource(notCandy)
-                        candy[i+6].tag = notCandy
-                     // 0
-                        candy[i+7].setImageResource(notCandy)
-                        candy[i+7].tag = notCandy
-                    }
 
-                    (i % 8 == 1 && !isBlank &&
-                            chosedCandy == candy[i+1].tag && chosedCandy == candy[i+2].tag && chosedCandy == candy[i+3].tag &&
-                            chosedCandy == candy[i+4].tag && chosedCandy == candy[i+5].tag && chosedCandy == candy[i+6].tag
-                            ) -> {
-
-
-                        score += 7
-
-
-                        binding.tvPlayerOneScore.text = "$score"
-                        // 6
-                        candy[i].setImageResource(notCandy)
-                        candy[i].tag = notCandy
-                       //5
-                        candy[i+1].setImageResource(notCandy)
-                        candy[i+1].tag = notCandy
-                      //4
-                        candy[i+2].setImageResource(notCandy)
-                        candy[i+2].tag = notCandy
-                        // 3
-                        candy[i+3].setImageResource(notCandy)
-                        candy[i+3].tag = notCandy
-                       //2
-                        candy[i+4].setImageResource(notCandy)
-                        candy[i+4].tag = notCandy
-                       // 1
-                        candy[i+5].setImageResource(notCandy)
-                        candy[i+5].tag = notCandy
-                        // 0
-                        candy[i+6].setImageResource(notCandy)
-                        candy[i+6].tag = notCandy
-                    }
-
-                    (i % 8 == 2 && !isBlank && chosedCandy == candy[i+1].tag &&
-                            chosedCandy == candy[i+2].tag && chosedCandy == candy[i+3].tag &&
-                            chosedCandy == candy[i+4].tag && chosedCandy == candy[i+5].tag
-                            )
-
-
-                    -> {
-                        score += 6
-                        binding.tvPlayerOneScore.text = "$score"
-                        //5
-                        candy[i].setImageResource(notCandy)
-                        candy[i].tag = notCandy
-                        //4
-                        candy[i+1].setImageResource(notCandy)
-                        candy[i+2].tag = notCandy
-                          // 3
-                        candy[i+2].setImageResource(notCandy)
-                        candy[i+2].tag = notCandy
-                        //2
-                        candy[i+3].setImageResource(notCandy)
-                        candy[i+3].tag = notCandy
-                        // 1
-                        candy[i+4].setImageResource(notCandy)
-                        candy[i+4].tag = notCandy
-                           // 0
-                        candy[i+5].setImageResource(notCandy)
-                        candy[i+5].tag = notCandy
-                    }
-
-
-                    ((i % 8 == 3) && !isBlank && chosedCandy == candy[+1].tag &&
-                            chosedCandy == candy[i+2].tag && chosedCandy == candy[i+3].tag &&
-                            chosedCandy == candy[i+4].tag
-                            )
-
-
-                    -> {
+                   if (( i%8 in 0..3) && !isBlank && candy[i].tag == candy[i+1].tag &&
+                       candy[i].tag == candy[i+2].tag && candy[i].tag == candy[i+3].tag &&
+                       candy[i].tag == candy[i+4].tag
+                            ){
                         // 10 bonus
                         score += (5 + 10)
 
@@ -274,14 +179,10 @@ class MainActivity : AppCompatActivity() {
                           // 0
                         candy[i+4].setImageResource(notCandy)
                         candy[i+4].tag = notCandy
-                    }
-
-
-                    (i % 8 == 4 && !isBlank && chosedCandy == candy[i+1].tag
-                     && chosedCandy == candy[i+2].tag && chosedCandy == candy[i+3].tag
-                            )
-
-                    -> {
+                   }
+                   else if ( (i % 8 in 0..4) && !isBlank && candy[i].tag == candy[i+1].tag &&
+                       candy[i].tag == candy[i+2].tag  && candy[i].tag == candy[i+3].tag
+                            ){
 
                         //  5 bonus
                         score += (4 + 5 )
@@ -301,8 +202,7 @@ class MainActivity : AppCompatActivity() {
                         candy[i+3].tag = notCandy
                     }
 
-                    (  !isBlank && candy[i+1].tag == chosedCandy && candy[i+2].tag == chosedCandy )
-                    -> {
+                  else if  (  !isBlank && candy[i+1].tag == candy[i].tag && candy[i+2].tag == candy[i].tag ) {
                         score += 3
                         binding.tvPlayerOneScore.text = "$score"
                         candy[i].setImageResource(notCandy)
@@ -317,16 +217,13 @@ class MainActivity : AppCompatActivity() {
 
                     }
 
-                    else
-                    -> {
-                        Log.e("else row", "${5 % 8}")
-                    }
+
 
                 }
             }
             // moveDownCandies()
         }
-    }
+
 
     private fun checkColumnForAll(){
 
@@ -336,150 +233,62 @@ class MainActivity : AppCompatActivity() {
 
 
 
-                val x = i
-                if (i < 8 && !isBlank &&  candy[x+noOfBlock].tag == candy[x].tag &&
-                    candy[x+2*noOfBlock].tag == candy[x].tag &&
-                    candy[x+3*noOfBlock].tag == candy[x].tag &&
-                    candy[x+4*noOfBlock].tag == candy[x].tag &&  candy[x+5*noOfBlock].tag == candy[x].tag &&
-                    candy[x+6*noOfBlock].tag == candy[x].tag &&  candy[x+7*noOfBlock].tag == candy[x].tag){
 
-                    score += 8
-                    binding.tvPlayerOneScore.text = "$score"
-                    candy[x].setImageResource(notCandy)
-                    candy[x].tag = notCandy
-
-                    candy[x+noOfBlock].setImageResource(notCandy)
-                    candy[x+noOfBlock].tag = notCandy
-
-                    candy[x+2*noOfBlock].setImageResource(notCandy)
-                    candy[x+2*noOfBlock].tag = notCandy
-
-                    candy[x+3*noOfBlock].setImageResource(notCandy)
-                    candy[x+3*noOfBlock].tag = notCandy
-
-                    candy[x+4*noOfBlock].setImageResource(notCandy)
-                    candy[x+4*noOfBlock].tag = notCandy
-
-                    candy[x+5*noOfBlock].setImageResource(notCandy)
-                    candy[x+5*noOfBlock].tag = notCandy
-
-                    candy[x+6*noOfBlock].setImageResource(notCandy)
-                    candy[x+6*noOfBlock].tag = notCandy
-
-                    candy[x+7*noOfBlock].setImageResource(notCandy)
-                    candy[x+7*noOfBlock].tag = notCandy
-
-
-                } else  if (i < 16 && !isBlank &&  candy[x+noOfBlock].tag == candy[x].tag &&
-                candy[x+2*noOfBlock].tag == candy[x].tag &&  candy[x+3*noOfBlock].tag == candy[x].tag &&
-                candy[x+4*noOfBlock].tag == candy[x].tag &&  candy[x+5*noOfBlock].tag == candy[x].tag &&
-                candy[x+6*noOfBlock].tag == candy[x].tag){
-
-                score += 7
-                binding.tvPlayerOneScore.text = "$score"
-                candy[x].setImageResource(notCandy)
-                candy[x].tag = notCandy
-
-                candy[x+noOfBlock].setImageResource(notCandy)
-                candy[x+noOfBlock].tag = notCandy
-
-                candy[x+2*noOfBlock].setImageResource(notCandy)
-                candy[x+2*noOfBlock].tag = notCandy
-
-                candy[x+3*noOfBlock].setImageResource(notCandy)
-                candy[x+3*noOfBlock].tag = notCandy
-
-                candy[x+4*noOfBlock].setImageResource(notCandy)
-                candy[x+4*noOfBlock].tag = notCandy
-
-                candy[x+5*noOfBlock].setImageResource(notCandy)
-                candy[x+5*noOfBlock].tag = notCandy
-
-                candy[x+6*noOfBlock].setImageResource(notCandy)
-                candy[x+6*noOfBlock].tag = notCandy
-
-
-            }else  if (i < 24 && !isBlank &&  candy[x+noOfBlock].tag == candy[x].tag &&
-                    candy[x+2*noOfBlock].tag == candy[x].tag &&  candy[x+3*noOfBlock].tag == candy[x].tag &&
-                    candy[x+4*noOfBlock].tag == candy[x].tag &&  candy[x+5*noOfBlock].tag == candy[x].tag ){
-
-                    score += 6
-                    binding.tvPlayerOneScore.text = "$score"
-                    candy[x].setImageResource(notCandy)
-                    candy[x].tag = notCandy
-
-                    candy[x+noOfBlock].setImageResource(notCandy)
-                    candy[x+noOfBlock].tag = notCandy
-
-                    candy[x+2*noOfBlock].setImageResource(notCandy)
-                    candy[x+2*noOfBlock].tag = notCandy
-
-                    candy[x+3*noOfBlock].setImageResource(notCandy)
-                    candy[x+3*noOfBlock].tag = notCandy
-
-                    candy[x+4*noOfBlock].setImageResource(notCandy)
-                    candy[x+4*noOfBlock].tag = notCandy
-
-                    candy[x+5*noOfBlock].setImageResource(notCandy)
-                    candy[x+5*noOfBlock].tag = notCandy
-
-                }else  if (i < 32 && !isBlank &&  candy[x+noOfBlock].tag == candy[x].tag &&
-                    candy[x+2*noOfBlock].tag == candy[x].tag &&  candy[x+3*noOfBlock].tag == candy[x].tag &&
-                    candy[x+4*noOfBlock].tag == candy[x].tag ){
+            if (i < 32 && !isBlank && candy[i + noOfBlock].tag == candy[i].tag &&
+               candy[i + 2 * noOfBlock].tag == candy[i].tag && candy[i + 3 * noOfBlock].tag == candy[i].tag &&
+               candy[i + 4 * noOfBlock].tag == candy[i].tag ){
                     // bonus 10
                     score += (5+10)
                     binding.tvPlayerOneScore.text = "$score"
-                    candy[x].setImageResource(notCandy)
-                    candy[x].tag = notCandy
+               candy[i].setImageResource(notCandy)
+               candy[i].tag = notCandy
 
-                    candy[x+noOfBlock].setImageResource(notCandy)
-                    candy[x+noOfBlock].tag = notCandy
+               candy[i + noOfBlock].setImageResource(notCandy)
+               candy[i + noOfBlock].tag = notCandy
 
-                    candy[x+2*noOfBlock].setImageResource(notCandy)
-                    candy[x+2*noOfBlock].tag = notCandy
+               candy[i + 2 * noOfBlock].setImageResource(notCandy)
+               candy[i + 2 * noOfBlock].tag = notCandy
 
-                    candy[x+3*noOfBlock].setImageResource(notCandy)
-                    candy[x+3*noOfBlock].tag = notCandy
+               candy[i + 3 * noOfBlock].setImageResource(notCandy)
+               candy[i + 3 * noOfBlock].tag = notCandy
 
-                    candy[x+4*noOfBlock].setImageResource(notCandy)
-                    candy[x+4*noOfBlock].tag = notCandy
+               candy[i + 4 * noOfBlock].setImageResource(notCandy)
+               candy[i + 4 * noOfBlock].tag = notCandy
 
-
-
-
-                }else  if (i < 40&& !isBlank &&  candy[x+noOfBlock].tag == candy[x].tag &&
-                    candy[x+2*noOfBlock].tag == candy[x].tag &&  candy[x+3*noOfBlock].tag == candy[x].tag ){
+            }
+            else  if (i < 40 && !isBlank && candy[i + noOfBlock].tag == candy[i].tag &&
+               candy[i + 2 * noOfBlock].tag == candy[i].tag && candy[i + 3 * noOfBlock].tag == candy[i].tag ){
                   // bonus
                     score += (4 +5)
                     binding.tvPlayerOneScore.text = "$score"
-                    candy[x].setImageResource(notCandy)
-                    candy[x].tag = notCandy
+               candy[i].setImageResource(notCandy)
+               candy[i].tag = notCandy
 
-                    candy[x+noOfBlock].setImageResource(notCandy)
-                    candy[x+noOfBlock].tag = notCandy
+               candy[i + noOfBlock].setImageResource(notCandy)
+               candy[i + noOfBlock].tag = notCandy
 
-                    candy[x+2*noOfBlock].setImageResource(notCandy)
-                    candy[x+2*noOfBlock].tag = notCandy
+               candy[i + 2 * noOfBlock].setImageResource(notCandy)
+               candy[i + 2 * noOfBlock].tag = notCandy
 
-                    candy[x+3*noOfBlock].setImageResource(notCandy)
-                    candy[x+3*noOfBlock].tag = notCandy
+               candy[i + 3 * noOfBlock].setImageResource(notCandy)
+               candy[i + 3 * noOfBlock].tag = notCandy
 
 
 
-                }
-            if(!isBlank && candy[x+noOfBlock].tag == candy[i].tag &&
-                    candy[x+2*noOfBlock].tag == candy[i].tag){
+            }
+            else if(!isBlank && candy[i + noOfBlock].tag == candy[i].tag &&
+                candy[i + 2 * noOfBlock].tag == candy[i].tag){
 
                     score += 3
                     binding.tvPlayerOneScore.text = "$score"
-                    candy[x].setImageResource(notCandy)
-                    candy[x].tag = notCandy
+                candy[i].setImageResource(notCandy)
+                candy[i].tag = notCandy
 
-                    candy[x+noOfBlock].setImageResource(notCandy)
-                    candy[x+noOfBlock].tag = notCandy
+                candy[i + noOfBlock].setImageResource(notCandy)
+                candy[i + noOfBlock].tag = notCandy
 
-                    candy[x+2*noOfBlock].setImageResource(notCandy)
-                    candy[x+2*noOfBlock].tag = notCandy
+                candy[i + 2 * noOfBlock].setImageResource(notCandy)
+                candy[i + 2 * noOfBlock].tag = notCandy
 
              }
         }
