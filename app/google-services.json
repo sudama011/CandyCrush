@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "471538641006",
+    "project_id": "candy-crush-fac7e",
+    "storage_bucket": "candy-crush-fac7e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:471538641006:android:d5ea98043050aae0a8de7f",
+        "android_client_info": {
+          "package_name": "com.example.candycrush"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "471538641006-nuvhd0h202ef0qqrql92pnpcafo1vo86.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.candycrush",
+            "certificate_hash": "e4501bd4abf05808f77dd06c325c57591c16ca36"
+          }
+        },
+        {
+          "client_id": "471538641006-1oqlqip9f30g7a4iqcg2dmv197e0q6m5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgZzrtd04ZEVly2I4PPIrVnyGG8SrgxyE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "471538641006-1oqlqip9f30g7a4iqcg2dmv197e0q6m5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

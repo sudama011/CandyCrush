@@ -1,7 +1,22 @@
 <resources>
-    <string name="app_name">CandyCrush</string>
+    <string name="app_name">Candy Crush</string>
     <string name="player_two">PLAYER 2</string>
     <string name="moves">moves</string>
     <string name="score">Score</string>
     <string name="player_one">PLAYER 1</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_with_facebook">Sign in with Facebook</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="title_activity_dashboard">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="practice">PRACTICE</string>
 </resources>

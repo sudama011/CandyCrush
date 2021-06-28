@@ -1,10 +1,11 @@
-package com.example.candycrush
+package com.example.candycrush.ui.activities
 
 
 import android.graphics.Bitmap
 import android.graphics.Insets
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -16,6 +17,8 @@ import android.widget.GridLayout
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.example.candycrush.OnSwipeTouchListener
+import com.example.candycrush.R
 import com.example.candycrush.databinding.ActivityMainBinding
 import java.util.*
 import kotlin.collections.ArrayList
@@ -25,12 +28,12 @@ import kotlin.math.floor
 class MainActivity : AppCompatActivity() {
 
   private val  candies = arrayOf(
-    R.drawable.bluecandy,
-    R.drawable.greencandy,
-    R.drawable.orangecandy,
-    R.drawable.purplecandy,
-    R.drawable.redcandy,
-    R.drawable.yellowcandy
+      R.drawable.bluecandy,
+      R.drawable.greencandy,
+      R.drawable.orangecandy,
+      R.drawable.purplecandy,
+      R.drawable.redcandy,
+      R.drawable.yellowcandy
   )
 
     private var candy:ArrayList<ImageView> = ArrayList<ImageView>()
@@ -47,6 +50,17 @@ class MainActivity : AppCompatActivity() {
     private val interval = 100L
     private var score = 0
     private var moves = 0
+    private lateinit var mPlayerCrack:MediaPlayer
+    private lateinit var mPlayerDown:MediaPlayer
+    private lateinit var mPlayerPress:MediaPlayer
+    private lateinit var mPlayerRelease:MediaPlayer
+    private lateinit var mPlayerDelicious:MediaPlayer
+    private lateinit var mPlayerDivine:MediaPlayer
+    private lateinit var mPlayerCandyCrushIntro:MediaPlayer
+
+
+
+
 
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,6 +68,20 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Initialize the text to speech
+
+        // Initialize the media player
+        mPlayerCrack = MediaPlayer.create(this, R.raw.crack)
+        mPlayerDivine = MediaPlayer.create(this, R.raw.divine)
+        mPlayerDelicious = MediaPlayer.create(this, R.raw.delicious)
+        mPlayerPress = MediaPlayer.create(this, R.raw.button_press)
+        mPlayerDown = MediaPlayer.create(this, R.raw.button_down)
+        mPlayerRelease = MediaPlayer.create(this, R.raw.button_release)
+        mPlayerCandyCrushIntro = MediaPlayer.create(this, R.raw.candy_crush_intro1)
+
+        mPlayerCandyCrushIntro.setVolume(0.17F, 0.17F)
+        mPlayerCandyCrushIntro.isLooping = true
+        mPlayerCandyCrushIntro.start()
 
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -86,42 +114,63 @@ class MainActivity : AppCompatActivity() {
 
                 override fun onSwipeLeft() {
                     super.onSwipeLeft()
+                    // play sound
+                    mPlayerPress.start()
                     candyToBeDragged = imageView.id
                     candyToBeReplaced = candyToBeDragged -1
                     candyInterChange()
                     moves += 1
                     binding.tvFirstPlayerMove.text = "$moves"
+                    // play sound Release
+                    mPlayerRelease.start()
                 }
 
                 override fun onSwipeRight() {
                     super.onSwipeRight()
+                    // play sound
+                    mPlayerPress.start()
+
                     candyToBeDragged = imageView.id
                     candyToBeReplaced = candyToBeDragged +1
                     candyInterChange()
                     moves += 1
                     binding.tvFirstPlayerMove.text = "$moves"
+                    // play sound Release
+                    mPlayerRelease.start()
                 }
 
                 override fun onSwipeTop() {
                     super.onSwipeTop()
+                    // play sound
+                    mPlayerPress.start()
+
                     candyToBeDragged = imageView.id
                     candyToBeReplaced = candyToBeDragged - noOfBlock
                     candyInterChange()
                     moves += 1
                     binding.tvFirstPlayerMove.text = "$moves"
+                    // play sound Release
+                    mPlayerRelease.start()
                 }
 
                 override fun onSwipeBottom() {
                     super.onSwipeBottom()
+                    // play sound
+                    mPlayerDown.start()
+
                     candyToBeDragged = imageView.id
                     candyToBeReplaced = candyToBeDragged + noOfBlock
                     candyInterChange()
                     moves += 1
                     binding.tvFirstPlayerMove.text = "$moves"
+
+                    // play sound Release
+                    mPlayerRelease.start()
                 }
             } )
 
         }
+
 
        mHandler = Handler()
         startRepeat()
@@ -131,170 +180,139 @@ class MainActivity : AppCompatActivity() {
         createBoardForSecondPlayer()
     }
 
-
-
     private fun checkRowAndColumn(){
-
-        for (i in 0 until 62){
-            val isBlank: Boolean = candy[i].tag == notCandy
-
-        }
-
-    }
-
-
-    private fun checkRowForAll() {
-
-        for (i in 0 until 62) {
-
-            val isBlank: Boolean = candy[i].tag == notCandy
-            val notValid = intArrayOf(6, 7, 14, 15, 22, 23, 30, 31, 38, 39, 46, 47, 54, 55)
-            val list: List<Int> = notValid.toList()
-
-            if (!list.contains(i)) {
-
-
-
-
-                   if (( i%8 in 0..3) && !isBlank && candy[i].tag == candy[i+1].tag &&
-                       candy[i].tag == candy[i+2].tag && candy[i].tag == candy[i+3].tag &&
-                       candy[i].tag == candy[i+4].tag
-                            ){
-                        // 10 bonus
-                        score += (5 + 10)
-
-                        binding.tvPlayerOneScore.text = "$score"
-                        //4
-                        candy[i].setImageResource(notCandy)
-                        candy[i].tag = notCandy
-                         // 3
-                        candy[i+1].setImageResource(notCandy)
-                        candy[i+1].tag = notCandy
-                       //2
-                        candy[i+2].setImageResource(notCandy)
-                        candy[i+2].tag = notCandy
-                       // 1
-                        candy[i+3].setImageResource(notCandy)
-                        candy[i+3].tag = notCandy
-                          // 0
-                        candy[i+4].setImageResource(notCandy)
-                        candy[i+4].tag = notCandy
-                   }
-                   else if ( (i % 8 in 0..4) && !isBlank && candy[i].tag == candy[i+1].tag &&
-                       candy[i].tag == candy[i+2].tag  && candy[i].tag == candy[i+3].tag
-                            ){
-
-                        //  5 bonus
-                        score += (4 + 5 )
-
-                        binding.tvPlayerOneScore.text = "$score"
-                        // 3
-                        candy[i].setImageResource(notCandy)
-                        candy[i].tag = notCandy
-
-                        candy[i+1].setImageResource(notCandy)
-                        candy[i+1].tag = notCandy
-                       // 1
-                        candy[i+2].setImageResource(notCandy)
-                        candy[i+2].tag = notCandy
-                      // 0
-                        candy[i+3].setImageResource(notCandy)
-                        candy[i+3].tag = notCandy
-                    }
-
-                  else if  (  !isBlank && candy[i+1].tag == candy[i].tag && candy[i+2].tag == candy[i].tag ) {
-                        score += 3
-                        binding.tvPlayerOneScore.text = "$score"
-                        candy[i].setImageResource(notCandy)
-                        candy[i].tag = notCandy
-                        Log.i("value of i", "$i")
-                        candy[i+1].setImageResource(notCandy)
-                        candy[i+1].tag = notCandy
-
-                        candy[i+2].setImageResource(notCandy)
-                        candy[i+2].tag = notCandy
-
-
-                    }
-
-
-
+        var max = 0
+        var indexMax = -1
+        var Rvt=0 // which stores similar vertical candies
+        var Rht=0
+        var n = noOfBlock
+        for (i in 0 until (n*n-1)){
+            var vt=1 // for vertical
+            var ht=1 // for horizontal
+            //    checking upper 2 candy
+            if(i-n>=0 && candy[i].tag == candy[i-n].tag){
+                vt++
+                if(i-(2*n)>=0 && candy[i].tag == candy[i-(2*n)].tag) {
+                    vt++
                 }
             }
-            // moveDownCandies()
-        }
-
-
-    private fun checkColumnForAll(){
-
-        for (i in 0 until 48){
-
-            val isBlank:Boolean = candy[i].tag == notCandy
-
-
-
-
-            if (i < 32 && !isBlank && candy[i + noOfBlock].tag == candy[i].tag &&
-               candy[i + 2 * noOfBlock].tag == candy[i].tag && candy[i + 3 * noOfBlock].tag == candy[i].tag &&
-               candy[i + 4 * noOfBlock].tag == candy[i].tag ){
-                    // bonus 10
-                    score += (5+10)
-                    binding.tvPlayerOneScore.text = "$score"
-               candy[i].setImageResource(notCandy)
-               candy[i].tag = notCandy
-
-               candy[i + noOfBlock].setImageResource(notCandy)
-               candy[i + noOfBlock].tag = notCandy
-
-               candy[i + 2 * noOfBlock].setImageResource(notCandy)
-               candy[i + 2 * noOfBlock].tag = notCandy
-
-               candy[i + 3 * noOfBlock].setImageResource(notCandy)
-               candy[i + 3 * noOfBlock].tag = notCandy
-
-               candy[i + 4 * noOfBlock].setImageResource(notCandy)
-               candy[i + 4 * noOfBlock].tag = notCandy
-
+            //    checking downward 2 candy
+            if(i+n<(n*n) && candy[i].tag == candy[i+n].tag){
+                vt++
+                if(i+(2*n)<(n*n) && candy[i].tag == candy[i+(2*n)].tag) {
+                    vt++
+                }
             }
-            else  if (i < 40 && !isBlank && candy[i + noOfBlock].tag == candy[i].tag &&
-               candy[i + 2 * noOfBlock].tag == candy[i].tag && candy[i + 3 * noOfBlock].tag == candy[i].tag ){
-                  // bonus
-                    score += (4 +5)
-                    binding.tvPlayerOneScore.text = "$score"
-               candy[i].setImageResource(notCandy)
-               candy[i].tag = notCandy
-
-               candy[i + noOfBlock].setImageResource(notCandy)
-               candy[i + noOfBlock].tag = notCandy
-
-               candy[i + 2 * noOfBlock].setImageResource(notCandy)
-               candy[i + 2 * noOfBlock].tag = notCandy
-
-               candy[i + 3 * noOfBlock].setImageResource(notCandy)
-               candy[i + 3 * noOfBlock].tag = notCandy
-
-
-
+            if(i-1>=0 && candy[i].tag == candy[i-1].tag){
+                ht++
+                if(i-2>=0 && candy[i].tag == candy[i-2].tag) {
+                    ht++
+                }
             }
-            else if(!isBlank && candy[i + noOfBlock].tag == candy[i].tag &&
-                candy[i + 2 * noOfBlock].tag == candy[i].tag){
+            if(i+1<(n*n) && candy[i].tag == candy[i+1].tag){
+                ht++
+                if(i+2<(n*n) && candy[i].tag == candy[i+2].tag) {
+                    ht++
+                }
+            }
+            if(ht>2 && vt>2) {
 
-                    score += 3
-                    binding.tvPlayerOneScore.text = "$score"
-                candy[i].setImageResource(notCandy)
-                candy[i].tag = notCandy
+                if (ht + vt - 1 > max) {
+                    max = ht + vt
+                    indexMax = i
+                    Rvt = vt
+                    Rht = ht
+                }
+            }
+            else if ( ht >2 ){
+                if(ht > max) {
+                    max = ht
+                    indexMax=i
+                    Rvt = 0
+                    Rht = ht
+                }
+            }
+            else if ( vt > 2 ){
+                if(vt > max) {
+                    max = vt
+                    indexMax=i
+                    Rvt = vt
+                    Rht = 0
+                }
+            }
 
-                candy[i + noOfBlock].setImageResource(notCandy)
-                candy[i + noOfBlock].tag = notCandy
-
-                candy[i + 2 * noOfBlock].setImageResource(notCandy)
-                candy[i + 2 * noOfBlock].tag = notCandy
-
-             }
         }
+        if(Rvt>2 || Rht>2){
+            if ( Rvt>2){
 
-     //   moveDownCandies()
+                if(indexMax-n>=0 && candy[indexMax].tag == candy[indexMax-n].tag){
+                    candy[indexMax-n].tag= notCandy
+                    candy[indexMax-n].setImageResource(notCandy)
+                    if(indexMax-(2*n)>=0 && candy[indexMax].tag == candy[indexMax-(2*n)].tag) {
+                        candy[indexMax-(2*n)].tag= notCandy
+                        candy[indexMax-(2*n)].setImageResource(notCandy)
+                    }
+                }
+                if(indexMax+n<(n*n) && candy[indexMax].tag == candy[indexMax+n].tag){
+                    candy[indexMax+n].tag= notCandy
+                    candy[indexMax+n].setImageResource(notCandy)
+                    if(indexMax+(2*n)<(n*n) && candy[indexMax].tag == candy[indexMax+(2*n)].tag) {
+                        candy[indexMax+(2*n)].tag= notCandy
+                        candy[indexMax+(2*n)].setImageResource(notCandy)
+                    }
+                }
+            }
+            if ( Rht>2){
+
+                if(indexMax-1>=0 && candy[indexMax].tag == candy[indexMax-1].tag){
+                    candy[indexMax-1].tag= notCandy
+                    candy[indexMax-1].setImageResource(notCandy)
+                    if(indexMax-2>=0 && candy[indexMax].tag == candy[indexMax-2].tag) {
+                        candy[indexMax-2].tag= notCandy
+                        candy[indexMax-2].setImageResource(notCandy)
+                    }
+                }
+
+                if(indexMax+1<(n*n) && candy[indexMax].tag == candy[indexMax+1].tag){
+                    candy[indexMax+1].tag= notCandy
+                    candy[indexMax+1].setImageResource(notCandy)
+                    if(indexMax+2<(n*n) && candy[indexMax].tag == candy[indexMax+2].tag) {
+                        candy[indexMax+2].tag= notCandy
+                        candy[indexMax+2].setImageResource(notCandy)
+                    }
+                }
+            }
+            candy[indexMax].tag= notCandy
+            candy[indexMax].setImageResource(notCandy)
+            if(Rht>2 && Rvt >2) {
+                score += (Rht+Rvt-1+ 10)
+                binding.tvPlayerOneScore.text = "$score"
+
+                // start sound divine
+                mPlayerDivine.start()
+            }
+            else if ( Rht==5 || Rvt ==5 ){
+                score += (5 + 10)
+                binding.tvPlayerOneScore.text = "$score"
+                // start sound divine
+                mPlayerDivine.start()
+            }
+            else if ( Rht==4 || Rvt ==4 ){
+                score += (4 + 5)
+                binding.tvPlayerOneScore.text = "$score"
+                // start sound
+                mPlayerDelicious.start()
+            }
+            else{
+                score += 3
+                binding.tvPlayerOneScore.text = "$score"
+                // start sound
+                mPlayerCrack.start()
+            }
+        }
     }
+
+
 
     private fun moveDownCandies():Boolean{
        var bool = false   //  check how many down needs
@@ -337,9 +355,9 @@ class MainActivity : AppCompatActivity() {
         override fun run() {
 
             try {
-
-                checkRowForAll()
-                checkColumnForAll()
+                checkRowAndColumn()
+             //   checkRowForAll()
+             //   checkColumnForAll()
                 var bool = moveDownCandies()
 
                 while(bool){
@@ -375,12 +393,12 @@ class MainActivity : AppCompatActivity() {
 
     // this is for second player
     private fun addResizeImageToList(){
-        candiesFirst.add(resize(ContextCompat.getDrawable(this,R.drawable.bluecandy)))
-        candiesFirst.add(resize(ContextCompat.getDrawable(this,R.drawable.greencandy)))
-        candiesFirst.add(resize(ContextCompat.getDrawable(this,R.drawable.orangecandy)))
-        candiesFirst.add(resize(ContextCompat.getDrawable(this,R.drawable.purplecandy)))
-        candiesFirst.add(resize(ContextCompat.getDrawable(this,R.drawable.yellowcandy)))
-        candiesFirst.add(resize(ContextCompat.getDrawable(this,R.drawable.redcandy)))
+        candiesFirst.add(resize(ContextCompat.getDrawable(this, R.drawable.bluecandy)))
+        candiesFirst.add(resize(ContextCompat.getDrawable(this, R.drawable.greencandy)))
+        candiesFirst.add(resize(ContextCompat.getDrawable(this, R.drawable.orangecandy)))
+        candiesFirst.add(resize(ContextCompat.getDrawable(this, R.drawable.purplecandy)))
+        candiesFirst.add(resize(ContextCompat.getDrawable(this, R.drawable.yellowcandy)))
+        candiesFirst.add(resize(ContextCompat.getDrawable(this, R.drawable.redcandy)))
 
     }
 
@@ -437,15 +455,44 @@ class MainActivity : AppCompatActivity() {
 
             // change background color of second player
             if(i%2==0){
-                imageView.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary))
+                imageView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
             }else{
-                imageView.setBackgroundColor(ContextCompat.getColor(this,R.color.teal_200))
+                imageView.setBackgroundColor(ContextCompat.getColor(this, R.color.teal_200))
             }
 
 
             gridLayout.addView(imageView)
         }
 
+    }
+
+    override fun onPause() {
+
+
+        if(mPlayerCandyCrushIntro.isPlaying){
+            mPlayerCandyCrushIntro.stop()
+        }
+        super.onPause()
+    }
+
+    override fun onResume() {
+
+        if(!mPlayerCandyCrushIntro.isPlaying) {
+            mPlayerCandyCrushIntro = MediaPlayer.create(this, R.raw.candy_crush_intro1)
+            mPlayerCandyCrushIntro.setVolume(0.17F, 0.17F)
+            mPlayerCandyCrushIntro.isLooping = true
+            mPlayerCandyCrushIntro.start()
+
+        }
+        super.onResume()
+
+    }
+
+    override fun onDestroy() {
+        if (mPlayerCandyCrushIntro.isPlaying){
+            mPlayerCandyCrushIntro.stop()
+        }
+        super.onDestroy()
     }
 
 }
