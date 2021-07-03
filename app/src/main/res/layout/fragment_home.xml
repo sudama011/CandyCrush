@@ -4,19 +4,110 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/splash_screeen_gradient_background"
     tools:context=".ui.fragments.HomeFragment">
 
     <TextView
-        android:id="@+id/text_home"
+        android:id="@+id/tv_user_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/fragment_Practice_dashboard_tv_margin_top"
+        android:layout_marginLeft="@dimen/fragment_Practice_dashboard_margin_left"
+        android:layout_marginRight="@dimen/fragment_Practice_dashboard_margin_right"
+        android:text="@string/name"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:fontFamily="cursive"
+        android:textSize="@dimen/text_size_20sp"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:id="@+id/ll_amount"
+        android:layout_width="0dp"
+        android:layout_height="66dp"
+        android:layout_marginTop="@dimen/fragment_Practice_dashboard_tv_margin_top"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/tv_user_name" >
+        <TextView
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/your_balance_is"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_size_20sp"
+            android:fontFamily="sans-serif"
+           android:textAlignment="center"
+            android:layout_weight="3"
+
+           />
+
+        <TextView
+            android:id="@+id/tv_balance"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="@string/amount"
+            android:lines="1"
+            android:textSize="@dimen/text_size_20sp"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            />
+
+            <ImageButton
+                android:id="@+id/ib_add_amount"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_baseline_add_24"
+                android:background="@drawable/player1_gradient_color_background"
+                android:contentDescription="@string/add_amount"
+               />
+
+
+
+
+
+    </LinearLayout>
+
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_practice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fragment_Practice_dashboard_tv_margin_top"
+        android:layout_marginLeft="@dimen/fragment_Practice_dashboard_margin_left"
+        android:layout_marginRight="@dimen/fragment_Practice_dashboard_margin_right"
+        android:text="@string/practice"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:fontFamily="cursive"
+        android:textSize="@dimen/text_size_20sp"
+        android:background="@drawable/btn_background"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_amount" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_play"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="cursive"
+        android:textSize="@dimen/text_size_20sp"
+        android:layout_marginTop="@dimen/fragment_play_home_margin_top"
+        android:layout_marginLeft="@dimen/fragment_Practice_dashboard_margin_left"
+        android:layout_marginRight="@dimen/fragment_Practice_dashboard_margin_right"
+        android:text="@string/play"
+        android:textColor="@color/white"
+        android:background="@drawable/btn_background"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_practice" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

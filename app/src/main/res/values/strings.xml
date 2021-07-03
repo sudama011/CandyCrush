@@ -16,7 +16,17 @@
     <string name="login_failed">"Login failed"</string>
     <string name="title_activity_dashboard">MainActivity</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_record">Record</string>
+    <string name="title_withdraw">Withdraw</string>
+    <string name="title_no_record">No Records Added yet</string>
     <string name="practice">PRACTICE</string>
+    <string name="play">PLAY</string>
+    <string name="name">adarsh</string>
+    <string name="your_balance_is">your balance is</string>
+    <string name="amount">100₹</string>
+    <string name="add_amount">add amount</string>
+    <string name="_30">30₹</string>
+    <string name="_50">50₹</string>
+    <string name="_100">100₹</string>
+    <string name="_500">500₹</string>
 </resources>

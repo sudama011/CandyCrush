@@ -13,11 +13,11 @@
             HERE geeksforgeeks IS THE NAME OF IMAGE-->
 
   <ImageView
+      android:src="@drawable/logo"
       android:id="@+id/image_left"
-      android:layout_width="50dp"
-      android:layout_height="50dp"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
       android:layout_marginTop="12dp"
-      android:background="@drawable/splash_screen_square_gradient_background"
       app:layout_constraintLeft_toLeftOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
 
@@ -67,10 +67,10 @@
 
   <ImageView
       android:id="@+id/image_right2"
-      android:layout_width="50dp"
-      android:layout_height="50dp"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
       android:layout_marginTop="120dp"
-      android:background="@drawable/splash_screen_round_gradient_background"
+     android:src="@drawable/logo"
       app:layout_constraintRight_toRightOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/image_right"
 

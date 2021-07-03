@@ -13,13 +13,13 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.example.candycrush.ui.fragments.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:name="com.example.candycrush.ui.fragments.RecordFragment"
+        android:label="@string/title_record"
+        tools:layout="@layout/fragment_record" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.candycrush.ui.fragments.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:name="com.example.candycrush.ui.fragments.WithdrawHistoryFragment"
+        android:label="@string/title_withdraw"
+        tools:layout="@layout/fragment_withdraw" />
 </navigation>

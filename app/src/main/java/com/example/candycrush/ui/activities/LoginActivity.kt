@@ -14,7 +14,12 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import com.example.candycrush.databinding.ActivityLoginBinding
 import com.example.candycrush.R
+import com.example.candycrush.doas.UserAmountDao
+import com.example.candycrush.doas.UserDao
+import com.example.candycrush.models.Amount
+import com.example.candycrush.models.User
 import com.example.candycrush.ui.activities.MainActivity
+import com.example.candycrush.utils.Constants
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -43,6 +48,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var auth: FirebaseAuth
     private lateinit var loading: ProgressBar
+    private lateinit var mAmount: Amount
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -104,6 +110,12 @@ class LoginActivity : AppCompatActivity() {
         loginWithGoogle.setOnClickListener { signIn() }
     }
 
+    override fun onStart() {
+        super.onStart()
+        val currentUser = auth.currentUser
+     //   updateUiWithUser(currentUser)
+    }
+
     private fun signIn() {
         val signInIntent = googleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
@@ -138,7 +150,10 @@ class LoginActivity : AppCompatActivity() {
         loading.visibility = View.VISIBLE
         GlobalScope.launch(Dispatchers.IO) {
             val auth = auth.signInWithCredential(credential).await()
+
             val user = auth.user
+            val userAmountDao = UserAmountDao()
+            userAmountDao.getBalance(this@LoginActivity)
             withContext(Dispatchers.Main) {
                 updateUiWithUser(user)
             }
@@ -147,20 +162,34 @@ class LoginActivity : AppCompatActivity() {
     }
     // [END auth_with_google]
 
-    private fun updateUiWithUser(user: FirebaseUser?) {
-        val welcome = getString(R.string.welcome)
-        val displayName = "${user.toString()}"
-        if (user != null) {
+    private fun updateUiWithUser(firebaseUser: FirebaseUser?) {
 
-            val intent = Intent(this, DashboardActivity::class.java)
-            startActivity(intent)
-            finish()
+        if (firebaseUser!= null) {
+            val user = User(firebaseUser.uid, firebaseUser.displayName,firebaseUser.email , firebaseUser.photoUrl.toString(),firebaseUser.phoneNumber.toString())
+            val userDao = UserDao()
+            userDao.registerUser(this ,user)
+            // assign bonus
+
+
+            val userAmountDao = UserAmountDao()
+
+
+            if(mAmount.registerBonus != 1){
+                val amount = Amount(firebaseUser.uid,firebaseUser.email, 0F,100F,1)
+                userAmountDao.setBonus(amount)
+            }
+            val welcome = getString(R.string.welcome)
+            val displayName = "${firebaseUser.displayName}"
             Toast.makeText(
                 applicationContext,
                 "$welcome $displayName",
                 Toast.LENGTH_LONG
             ).show()
-
+            loading.visibility = View.GONE
+            val intent = Intent(this, DashboardActivity::class.java)
+            intent.putExtra(Constants.USER_NAME,displayName)
+            startActivity(intent)
+            finish()
         } else {
             binding.loginWithGoogle.visibility = View.VISIBLE
             loading.visibility = View.GONE
@@ -168,10 +197,13 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    private fun showLoginFailed(@StringRes errorString: Int) {
+    fun showLoginFailed( errorString:String) {
         Toast.makeText(applicationContext, errorString, Toast.LENGTH_SHORT).show()
     }
 
+    fun amountGetSuccess(amount: Amount){
+        mAmount = amount
+    }
 
     /**
      * Extension function to simplify setting an afterTextChanged action to EditText components.
